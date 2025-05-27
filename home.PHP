@@ -1,0 +1,334 @@
+
+   <?php
+   // Database connection
+   $servername = "localhost";
+   $username = "root";
+   $password = "";
+   $dbname = "mariancollege";
+   
+   $conn = new mysqli($servername, $username, $password, $dbname);
+   
+   // Check connection
+   if ($conn->connect_error) {
+       die("Connection failed: " . $conn->connect_error);
+   }
+   
+   // Fetch the latest news from the database
+   $sql = "SELECT marian_news FROM mariannews WHERE news_id = 1";
+   $result = $conn->query($sql);
+   
+   $news = "";
+   if ($result->num_rows > 0) {
+       $row = $result->fetch_assoc();
+       $news = $row['marian_news'];
+   } else {
+       $news = "No news available.";
+   }
+   $news = ucwords($news);
+
+   
+   $conn->close();
+   ?>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home page</title>
+   <link rel="stylesheet" href="marian.css">
+   <style>
+    body{
+        margin: 0;
+    }
+    .video img {
+        width: 100%;
+        height: 500px;
+        display: block; 
+    }
+    .video{
+        margin-bottom: 0%;
+    }
+    
+    @keyframes blink {
+        0% { opacity: 1; } 
+        50% { opacity: 0; } 
+        100% { opacity: 1; } 
+    }
+    .News{
+        background-color: #d01b1b;
+        height: 55px;
+        margin-top: 0%;
+        display: flex;
+        align-items: center;
+        padding-left: 150px;
+    }
+    .news h4{
+        color: yellow;
+        animation: blink 1s infinite;
+    }
+    .news h5{
+        color: white;
+        margin-left :50px;
+    }
+    .marian-life{
+        margin: auto;
+        max-width: 1150px;
+        overflow: hidden; 
+        position: relative;
+      
+    }
+    .marian-life h1{
+        margin-left: 10px;
+    }
+    .grids{
+        display: flex;
+        transition: transform 1.5s ease-in-out;
+    }
+    .grids > div {
+        flex: 1 0 calc(31.5% - 40px); 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        padding: 10px;
+        text-align: center;
+        margin: 0 20px;
+    }
+   .grids p{
+    line-height: 1.5;
+   }
+   .grid-wrapper {
+    overflow: hidden;
+    position: relative;
+   }
+
+    .prev, .next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: #0c2d55;
+        color: white;
+        padding: 10px;
+        cursor: pointer;
+        border: none;
+        z-index: 10;
+        border-radius: 80%;
+    }
+
+    .prev { left: 0; }
+    .next { right: 0; }
+</style>
+    
+</head>
+<body>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const gridsElement = document.querySelector(".grids");
+            const gridItems = Array.from(document.querySelectorAll(".grids > div"));
+            const totalItems = gridItems.length;
+            let currentIndex = 0;
+            const visibleGrids = 3;
+    
+            // Clone all grid items and append them to the end for seamless looping
+            gridItems.forEach(item => {
+                gridsElement.appendChild(item.cloneNode(true));
+            });
+    
+            function updateGridPosition() {
+                const itemWidth = gridsElement.children[0].offsetWidth + 40; // Include margin
+                gridsElement.style.transform = `translateX(${-currentIndex * itemWidth}px)`;
+            }
+    
+            function moveGrid(direction) {
+                currentIndex += direction;
+    
+                // If we reach the end of the cloned items, reset to the beginning without a visible jump
+                if (currentIndex >= totalItems) {
+                    currentIndex = 0;
+                    gridsElement.style.transition = 'none';
+                    gridsElement.style.transform = `translateX(0)`;
+                    setTimeout(() => {
+                        gridsElement.style.transition = 'transform 1.5s ease-in-out';
+                        moveGrid(direction); // Move again to ensure smooth transition
+                    }, 0);
+                } else if (currentIndex < 0) {
+                    currentIndex = totalItems - 1;
+                    gridsElement.style.transition = 'none';
+                    gridsElement.style.transform = `translateX(${-currentIndex * (gridsElement.children[0].offsetWidth + 40)}px)`;
+                    setTimeout(() => {
+                        gridsElement.style.transition = 'transform 1.5s ease-in-out';
+                        moveGrid(direction); // Move again to ensure smooth transition
+                    }, 0);
+                } else {
+                    updateGridPosition();
+                }
+            }
+    
+            function autoSlide() {
+                moveGrid(1);
+            }
+    
+             setInterval(autoSlide, 3000);
+            document.querySelector(".prev").addEventListener("click", () => moveGrid(-1));
+            document.querySelector(".next").addEventListener("click", () => moveGrid(1));
+    
+            // Initialize the grid position
+            updateGridPosition();
+        });
+    </script>
+    <header>
+    <div class="head">
+        <div class="logo">
+            <img src="logo1.png" alt="marian-logo">
+        </div>
+        <div class="college-name">   
+            <h3>MARIAN COLLEGE <br> KUTTIKANAM</h3>
+            <h5 id="h">AUTONOMOUS</h5>
+            <h5 >MAKING COMPLETE</h5>
+        </div>
+    </div>
+        <div class="nav1">
+             <nav>
+                <ul>
+                    <li><a href="home.htm" target="_blank">RESEARCH</a></li>
+                    <li><a href="aboutus.tml" target="_blank">IQAC</a></li>
+                    <li><a href="#services" target="_blank">RANKING</a></li>
+                    <li><a href="#contact" target="_blank">PLACEMENT</a></li>
+                    <li><a href="#home" target="_blank">ALUMNI</a></li>
+                    <li><a href="#about" target="_blank">GALLERY</a></li>
+                    <li><a href="#services" target="_blank">QUICK LINKS</a></li>
+                    <li><a href="contact.php" target="_blank">CONTACT US</a></li>
+                    <li><a href="registerform.php" target="_blank">LOGIN</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="nav2">
+            <nav>
+               <ul>
+                   <li><a href="home.php"  target="_blank">HOME</a></li>
+                   <li><a href="aboutus.html"  target="_blank">ABOUT US</a></li>
+                   <li>
+                    <a href="">ACADEMICS</a>
+                    <ul class="dropdown">
+                        <li><a href="" >Department of Economics</a></li>
+                        <li><a href="" >Department of Communication and Media Studies</a></li>
+                        <li><a href="" >Department of Hospitality and Tourism Management</a></li>
+                        <li><a href="" >Department of English / Languages</a></li>
+                        <li><a href="" >Department of Mathematics</a></li>
+                        <li><a href="" >Department of Physics</a></li>
+                    </ul>
+                    </li>
+                   <li><a href="examination.html" target="_blank">EXAMINATION</a></li>
+                   <li>
+                    <a href="">STUDENT SUPPORT</a>
+                    <ul class="dropdown">
+                        <li><a href="" >Approval Forms</a></li>
+                        <li><a href="" >College Magazine</a></li>
+                        <li><a href="" >Clubs & Associations</a></li>
+                        <li><a href="" >Cells</a></li>
+                        <li><a href="" >Facilities</a></li>
+                        <li><a href="" >Grooming Standards</a></li>
+                    </ul>
+                    </li>
+                   <li><a href="library.html" target="_blank">LIBRARY</a></li>
+                   <li><a href="admission.html" target="_blank">ADMISSIONS</a></li>
+               </ul>
+           </nav>
+       </div>
+    </header>
+    
+    <div class="video">
+        <img src="Marian_College_Kuttikkanam.jpg" alt="marian-video">
+   </div>
+   <div class="news">
+        <h4>News*</h4> <h5> <?php echo $news; ?></h5>
+   </div>
+   <div class="marian-life">
+        <h1>Life @Marian</h1>
+        <button class="prev" onclick="moveGrid(-1)">&#10094;</button>  
+        <div class="grid-wrapper">
+        <div class="grids">
+            <div>
+                    <img src="sports.jpeg" alt="sports" width="300px" height="200px">
+                <h4>Sports</h4>
+                <p>
+                    Marian College offers a variety of sports facilities to keep students active and engaged. 
+                    From basketball courts to a well-maintained football field, we encourage participation 
+                    in team sports. Indoor activities like table tennis and chess are also available for students 
+                    who prefer strategic games. Regular sports events and intercollegiate competitions 
+                    ensure a vibrant athletic culture.
+                </p>
+            </div>
+
+            <div>
+                <img src="facility.jpg" alt="Faciliy" width="300px" height="200px">
+                <h4>Facilities</h4>
+                <p>
+                    Our campus is equipped with state-of-the-art facilities to support academic and extracurricular pursuits. 
+                    The library boasts a vast collection of books and digital resources. We have modern 
+                    classrooms, laboratories, and IT hubs to foster an environment of learning and innovation. 
+                    A cafeteria offering diverse cuisines and spacious seminar halls make the campus life enriching.
+                </p>
+            </div>
+
+            <div>
+                <img src="hostel.jpeg" alt="hostel" width="300px" height="200px">
+                <h4>Hostels</h4>
+                <p>
+                The college provides comfortable and secure hostel accommodations for both boys and girls. 
+                Rooms are well-furnished, ensuring a home-away-from-home experience. Each hostel has 24/7 
+                security, Wi-Fi connectivity, and common recreational spaces. Mess facilities serve nutritious 
+                meals, catering to a variety of dietary preferences. Events like hostel day foster community and fun.
+             </p>
+            </div>
+
+            <div>
+                <img src="libr.webp" alt="library" width="300px" height="200px">
+                <h4>Library</h4>
+                <p>
+                The college provides comfortable and secure hostel accommodations for both boys and girls. 
+                Rooms are well-furnished, ensuring a home-away-from-home experience. Each hostel has 24/7 
+                security, Wi-Fi connectivity, and common recreational spaces. Mess facilities serve nutritious 
+                meals, catering to a variety of dietary preferences. Events like hostel day foster community and fun.
+            </p>
+            </div>
+
+        </div>
+    </div>
+    <button class="next" onclick="moveGrid(1)">&#10095;</button>
+    </div>
+     <footer>
+        <div class="footer-name">
+            <h2>MARIAN COLLEGE,</h2><h2 id="h">KUTTIKANAM(AUTONOMOUS)</h2>
+            <p>
+                (+91 -7594971004, +91 - 7594971020)
+            </p>
+        </div>
+        <div class="footer-map">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3934.137874605935!2d76.96905737465184!3d9.583381790501777!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b064dc8bda5cb29%3A0x3d161914b6967f9!2sMarian%20College%20Kuttikkanam%20(Autonomous)!5e0!3m2!1sen!2sin!4v1739365449264!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <div class="footer-contact">
+            <h2>GET IN TOUCH</h2>
+            <div class="contact-items">
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>Reception - +91 - 7594971004</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>Admissions - +91 - 7594971020</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>mariancolege@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Kuttikkanam P.O, Peermade, <br>Idukki District, Kerala, India</span>
+                </div>
+            </div>
+        </div>
+           
+    </footer>
+    <div class="copyright">
+        <p>Copyright &copy 2024 All Rights Reserved | Marian College Kuttikanam | Privacy Policy | Terms & Conditions</p>
+    </div>
+       
+</body>
+</html> 

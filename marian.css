@@ -1,0 +1,190 @@
+body{
+    margin: 0;
+}
+.head {
+display: flex;
+margin-left: 95px;
+margin-right: 95px;
+padding: 10px;
+margin-bottom: 0%;
+}
+header{
+    height: 120px;
+}
+.logo ,.college-name{
+margin-top: 20px;
+
+}
+.logo img {
+width: 50px;
+height: 50px;
+}
+
+.college-name {
+margin-left: 5px;
+}
+
+.college-name h3 {
+margin: 0;
+}
+
+.college-name h5 {
+margin: 0;
+}
+#h{
+margin-left: 89px;
+}
+
+.nav1 {
+margin-bottom: 0%;
+position: relative; /* Allows adjustment relative to its normal position */
+top: -120px; 
+margin-left: 400px;
+display: flex;
+justify-content: space-between;
+align-items: center; 
+padding: 0px 100px;
+color:white;
+margin-top: 0%;
+}
+.nav1 ul {
+list-style: none;
+display: flex;
+}
+.nav1 ul li {
+margin: 0 15px;
+}
+.nav1 ul li a {
+text-decoration: none;
+color:black;
+font-size: 13px;
+transition: color 0.3s;
+}
+.nav1 ul li a:hover {
+    color: #d01b1b;
+}
+.nav2 {
+
+margin-bottom: 0%;
+position: relative; /* Allows adjustment relative to its normal position */
+top: -130px; 
+margin-left: 300px;
+display: flex;
+justify-content: space-between;
+align-items: center; 
+padding: 0px 100px;
+color:white;
+margin-top: 0%;
+}
+.nav2 ul {
+list-style: none;
+display: flex;
+}
+.nav2 ul li {
+margin: 0 19px;
+}
+.nav2 ul li a {
+text-decoration: none;
+color:black;
+font-size: 16px;
+transition: color 0.3s;
+}
+.nav2 ul li a:hover {
+color: #d01b1b;
+}
+nav ul li  .dropdown {
+  display: none;
+  position: absolute;
+  background-color:white;
+  top: 100%;
+  left: 0;
+  min-width: 300px;
+  z-index: 10;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li .dropdown li {
+  margin: 0%;
+  width: 100%;
+}
+
+nav ul li .dropdown li a {
+  padding: 10px;
+  display: block;
+  text-align: left;
+  
+}
+
+nav ul li  .dropdown li a:hover {
+  background-color:rgb(156, 5, 5);
+  color:white;
+}
+
+/* Show dropdown on hover */
+nav ul li:hover >.dropdown {
+display: block;
+}
+nav ul li {
+  position: relative; /* Ensures dropdown is positioned relative to the parent li */
+}
+/* Footer Styles */
+footer {
+    background-color: #1f3971;
+    color: white;
+    padding-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 60px;
+    padding: 20px;
+    margin: 0 auto; /* Center grid */
+    max-width: 100%; /* Limit maximum width */
+    height: auto;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    margin-top: 10%;
+  }
+  
+  .footer-name {
+    margin-left: 50px;
+    margin-top: 50px;
+  }
+  .footer-name h2{
+   margin: 0;
+  }
+  .footer-map iframe {
+    width: 350px;
+    height: 200px;
+    border: 0;
+  }
+  
+  .footer-contact {
+    margin-right: 100px;
+    margin-bottom: 20px;
+  }
+  .footer-contact h2{
+    margin-bottom: 10px;
+  }
+  
+  .contact-items {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .copyright {
+    background-color: #1b2d54;
+    height: 50px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+  }
